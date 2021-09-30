@@ -22,7 +22,7 @@ class CatListFragment : Fragment() {
     ): View {
         binding = FragmentCatListBinding.inflate(layoutInflater, container, false)
 
-        val adapter = CatListAdapter()
+        val adapter = CatListAdapter(this)
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

@@ -9,6 +9,29 @@
         android:id="@+id/catListFragment"
         android:name="anton.miranouski.cats.fragments.list.CatListFragment"
         android:label="fragment_cat_list"
-        tools:layout="@layout/fragment_cat_list" />
+        tools:layout="@layout/fragment_cat_list" >
+        <action
+            android:id="@+id/action_catListFragment_to_catSingleFragment"
+            app:destination="@id/catSingleFragment"
+            app:enterAnim="@anim/flip_in"
+            app:exitAnim="@anim/flip_out"
+            app:popEnterAnim="@anim/flip_in"
+            app:popExitAnim="@anim/flip_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/catSingleFragment"
+        android:name="anton.miranouski.cats.fragments.single.CatSingleFragment"
+        android:label="fragment_cat_single"
+        tools:layout="@layout/fragment_cat_single" >
+        <action
+            android:id="@+id/action_catSingleFragment_to_catListFragment"
+            app:destination="@id/catListFragment"
+            app:enterAnim="@anim/flip_out"
+            app:exitAnim="@anim/flip_in" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>
