@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import anton.miranouski.cats.databinding.FragmentCatListBinding
-import kotlinx.coroutines.flow.collectLatest
 
 class CatListFragment : Fragment() {
 
@@ -23,17 +21,15 @@ class CatListFragment : Fragment() {
         binding = FragmentCatListBinding.inflate(layoutInflater, container, false)
 
         val adapter = CatListAdapter(this)
+
+        catListViewModel = ViewModelProvider(this).get(CatListViewModel::class.java)
+        catListViewModel.images.observe(viewLifecycleOwner) {
+            adapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        catListViewModel = ViewModelProvider(this).get(CatListViewModel::class.java)
-
-        lifecycleScope.launchWhenCreated {
-            catListViewModel.getCats().collectLatest {
-                adapter.submitData(it)
-            }
-        }
 
         return binding.root
     }

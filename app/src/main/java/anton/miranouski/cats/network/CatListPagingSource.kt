@@ -34,7 +34,10 @@ class CatListPagingSource(private val service: CatService) : PagingSource<Int, C
     }
 
     override fun getRefreshKey(state: PagingState<Int, Cat>): Int? {
-        return state.anchorPosition
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
     }
 
     companion object {
