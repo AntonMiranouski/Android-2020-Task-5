@@ -1,4 +1,6 @@
-dependencyResolutionManagement {
+@file:Suppress("UnstableApiUsage")
+
+@Suppress("JcenterRepositoryObsolete") dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
@@ -7,4 +9,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Cats"
-include ':app'
+include(":app")
