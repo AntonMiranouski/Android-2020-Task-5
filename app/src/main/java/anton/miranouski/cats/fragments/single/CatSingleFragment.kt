@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,8 @@ class CatSingleFragment : Fragment() {
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCatSingleBinding.inflate(layoutInflater, container, false)
@@ -91,14 +93,14 @@ class CatSingleFragment : Fragment() {
             val contentResolver = activity?.contentResolver
             contentResolver?.insert(imageCollection, contentValues)?.also { uri ->
                 contentResolver.openOutputStream(uri).use { outputStream ->
-                    if (!bmp.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)) {
+                    if (!bmp.compress(Bitmap.CompressFormat.JPEG, COMPRESS_QUALITY, outputStream)) {
                         throw IOException("Couldn't save bitmap")
                     }
                 }
             } ?: throw IOException("Couldn't create MediaStore entry")
             true
         } catch (e: IOException) {
-            e.printStackTrace()
+            Log.e(TAG, e.stackTraceToString())
             false
         }
     }
@@ -117,4 +119,9 @@ class CatSingleFragment : Fragment() {
         }
     }
 
+    companion object {
+
+        private const val TAG = "CatSingleFragment"
+        private const val COMPRESS_QUALITY = 100
+    }
 }

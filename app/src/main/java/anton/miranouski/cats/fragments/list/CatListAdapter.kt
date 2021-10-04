@@ -26,7 +26,6 @@ class CatListAdapter(private val parentFragment: CatListFragment) :
         if (currentItem != null) {
             holder.bind(currentItem)
         }
-
     }
 
     inner class CatViewHolder(private val binding: DataRowBinding) :
@@ -36,6 +35,7 @@ class CatListAdapter(private val parentFragment: CatListFragment) :
             binding.ivCat.load(cat.imageUrl) {
                 placeholder(R.drawable.ic_baseline_photo)
                 error(R.drawable.ic_baseline_error_outline)
+                crossfade(CROSSFADE_DURATION)
             }
 
             binding.ivCat.setOnClickListener {
@@ -54,5 +54,7 @@ class CatListAdapter(private val parentFragment: CatListFragment) :
             override fun areContentsTheSame(oldItem: Cat, newItem: Cat) =
                 oldItem == newItem
         }
+
+        private const val CROSSFADE_DURATION = 250
     }
 }
